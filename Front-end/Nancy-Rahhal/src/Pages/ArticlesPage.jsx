@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const ArticlesPage = () => {
     const [article, setarticle]=useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
 
     useEffect(()=>{
@@ -31,12 +32,24 @@ const ArticlesPage = () => {
 
   return (
     <div className="w-100 vh-100">
-    <div>nancy</div>
+    <div className="">
+            <input
+              type="text"
+              className="admin-search px-3"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e)=>setSearchTerm(e.target.value)}
+              style={{color:'white'}}
+            />
+          </div>
     <div className='campaign-request-card-home-container d-flex flow-row justify-content-center align-items-center gap-5'>
 
    
     {article &&
      article
+     .filter((item) =>
+     (searchTerm === "" ||
+        (item.title && item.title.toLowerCase().includes(searchTerm.toLowerCase()))))
     .map((item, index) => (
  <ArticleCard className="home-campaigns-cards" key={index} data={item} />
 ))}      
